@@ -1,0 +1,28 @@
+#root{
+  margin-top: 4rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+button, .fileSelect::file-selector-button{
+  padding: 1rem;
+  border: none;
+  border-radius: 1rem;
+  background-color: black;
+  font-family: poppins;
+  font-weight: bold;
+}
+
+.images-container{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 3rem;
+  gap: 1rem;
+  width: 100%;
+}
+.image-item{
+  width: 70vw;
+  border-radius: 20px;
+}
