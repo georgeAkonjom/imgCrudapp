@@ -30,7 +30,7 @@ function App() {
 
 		uploadTask.on(
 			"state_changed",
-			(snapshot) => {
+			(snapshot:any) => {
 				const progress = Math.round(
 					(snapshot.bytesTransferred /
 						snapshot.totalBytes) *
@@ -38,12 +38,12 @@ function App() {
 				);
 				setProgresspercent(progress);
 			},
-			(error) => {
+			(error:any) => {
 				alert(error);
 			},
 			() => {
 				getDownloadURL(uploadTask.snapshot.ref).then(
-					(downloadURL) => {
+					(downloadURL:any) => {
 						setImgUrl(downloadURL);
 					}
 				);
@@ -70,14 +70,14 @@ function App() {
 
 		// List all items (files and folders) in the "files" folder
 		listAll(storageRef)
-			.then((result) => {
+			.then((result:any) => {
 				console.log(
 					"List of items retrieved:",
 					result.items
 				);
 
 				const imagePromises = result.items.map(
-					(itemRef) => {
+					(itemRef:any) => {
 						const fileName = itemRef.name;
 						const fileExtension = fileName
 							.split(".")
@@ -105,7 +105,7 @@ function App() {
 							console.log("Valid image found:", fileName);
 
 							// For each image item, get the download URL
-							return getDownloadURL(itemRef).then((url) => {
+							return getDownloadURL(itemRef).then((url:any) => {
 								console.log(
 									"Download URL for",
 									fileName,
