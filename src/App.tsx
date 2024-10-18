@@ -10,13 +10,18 @@ import {
 } from "firebase/storage";
 
 function App() {
-	const [imgUrl, setImgUrl] = useState(null);
-	const [progresspercent, setProgresspercent] = useState(0);
+	const [imgUrl, setImgUrl] = useState<string | null>(null);
+	const [progresspercent, setProgresspercent] =
+		useState<number>(0);
 
-	const handleSubmit = (e: any) => {
+	const handleSubmit = (
+		e: React.FormEvent<HTMLFormElement>
+	) => {
 		e.preventDefault();
-		const file = e.target[0]?.files[0];
+		const file = (e.currentTarget[0] as HTMLInputElement)
+			.files?.[0];
 		if (!file) return;
+
 		const storageRef = ref(storage, `files/${file.name}`);
 		const uploadTask = uploadBytesResumable(
 			storageRef,
@@ -38,13 +43,14 @@ function App() {
 			},
 			() => {
 				getDownloadURL(uploadTask.snapshot.ref).then(
-					(downloadURL: any) => {
+					(downloadURL) => {
 						setImgUrl(downloadURL);
 					}
 				);
 			}
 		);
 	};
+
 	useEffect(() => {
 		// Create a reference to the "files" folder
 		const storageRef = ref(storage, "files");
@@ -141,7 +147,6 @@ function App() {
 				);
 			})
 			.catch((error: Error) => {
-				// Handle any errors that occurred during the listing or URL retrieval
 				console.error(
 					"Error listing images or getting URLs:",
 					error
@@ -154,7 +159,9 @@ function App() {
 			<Header header="Upload an Image" />
 			<form onSubmit={handleSubmit} className="form">
 				<input className="fileSelect" type="file" />
-				<button className="uploadButton" type="submit">Upload</button>
+				<button className="uploadButton" type="submit">
+					Upload
+				</button>
 			</form>
 			{!imgUrl && (
 				<div className="outerbar">
@@ -169,9 +176,10 @@ function App() {
 			{imgUrl && (
 				<img src={imgUrl} alt="uploaded file" width={200} />
 			)}
-			{/* pull and render all previously uploaded imgs */}
+			{/* Pull and render all previously uploaded images */}
 			<div className="images-container"></div>
 		</div>
 	);
 }
+
 export default App;
